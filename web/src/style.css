@@ -1,0 +1,21 @@
+p {
+  margin: 0;
+}
+
+.pull-right {
+  float: right;
+}
+
+body {
+  margin: 0;
+}
+
+.gpu {
+  transform: translateZ(0);
+}
+
+body,html, #app {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden
+}
