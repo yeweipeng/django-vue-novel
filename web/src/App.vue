@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <transition :name="transitionName">
-    <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </transition>
     <loading text="加载中..." v-model="loading" position="fixed"></loading>
   </div>

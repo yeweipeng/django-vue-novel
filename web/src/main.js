@@ -4,8 +4,9 @@ import App from './App'
 import Router from 'vue-router'
 import {routes} from './utils/routing-table'
 import {load} from './utils/load'
-// import from 'vux/'
+import  { LoadingPlugin } from 'vux'
 
+Vue.use(LoadingPlugin)
 Vue.use(Router)
 load(Vue)
 
