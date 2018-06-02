@@ -81,3 +81,13 @@ def json_rsp(func):
 		resp['retmsg'] = CommonErrorCode.SUCCESS.message
 		return http.HttpResponse(json.dumps(resp), content_type='application/json; charset=utf-8')
 	return _func
+
+
+def re_map_keys(rows, update_map={}, del_list=[]):
+	for row in rows:
+		for name in row.keys():
+			if name in update_map:	
+				row[update_map[name]] = row[name]
+				del row[name]
+			if name in del_list:
+				row.pop(name, None)
