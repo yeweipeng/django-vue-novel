@@ -8,8 +8,8 @@
           <swipeout-button v-if="book.is_save" type="warn">删除</swipeout-button>
           <swipeout-button v-else background-color="#d0ba32">收藏</swipeout-button>
         </div>
-        <cell slot="content" :link="'book/' + book.id + '/' + book.enter_chapter" :inline-desc="book.newest_chapter">
-          <span slot="title">{{book.name}} <badge v-show="book.has_newest"></badge></span>
+        <cell slot="content" :link="'book/' + book.id + '/' + book.last_read_chapter_id" :inline-desc="book.last_read_chapter_name">
+          <span slot="title">{{book.name}} <badge v-show="book.has_latest"></badge></span>
           <img class="book-img" slot="icon" :src="book.img_url"/>
         </cell>
       </swipeout-item>
@@ -40,12 +40,8 @@ export default {
   computed: {
   },
   created: function() {
-    axios.get('/book/api/get_books', {
-      params : {
-        user_id: 1
-      }
-    }).then((data) => {
-      this.books = data.data
+    axios.get('/book/api/get_like_book_list/').then((data) => {
+      this.books = data.data.data
     })
   }
 }

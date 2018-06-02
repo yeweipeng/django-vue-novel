@@ -1,7 +1,7 @@
 <template>
   <div>
     <group :title="book_name">
-      <cell v-for="chapter in chapters" :key="chapter.id" :title="chapter.name" :link="chapter.url"></cell>
+      <cell v-for="chapter in chapters"  :key="chapter.id" :title="chapter.name" :link="chapter.url"></cell>
     </group>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
     methods: {
     },
     created () {
-    axios.get('/book/api/get_dir', {
+    axios.get('/book/api/get_chapter_list', {
       params : {
         user_id: 1,
         book_id: this.book_id,
@@ -39,6 +39,7 @@ export default {
           url: '/book/' + this.book_id + '/' + item.chapter_id
         }
       })
+      this.chapters.reverse()
     })
     }
 }

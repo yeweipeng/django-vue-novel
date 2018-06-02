@@ -52,7 +52,7 @@ module.exports = {
     noInfo: true,
     proxy: {
       '/book/api/*': {
-        target: 'http://127.0.0.1:5000',
+        target: 'http://127.0.0.1:8000',
         secure: false
       }
     }
