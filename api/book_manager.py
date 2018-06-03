@@ -1,6 +1,10 @@
 from .models import BookLikeTab
 from common.api_utils import re_map_keys
-import api.site.biquge_tw as noval_manager
+from common.error_code import CommonErrorCode
+import api.site.biquge_cn as noval_manager
+
+def search_book(search_word):
+	return noval_manager.search(search_word)
 
 
 def get_like_book_list(user_id):
@@ -9,7 +13,6 @@ def get_like_book_list(user_id):
 		'book_id': 'id',
 		'book_name': 'name',
 		'book_img_url': 'img_url',
-		'book_desc': 'desc',
 		'flag': 'is_save'
 	}
 	del_list = ['user_id']
@@ -37,3 +40,17 @@ def get_latest_chapter_info(book_id, now_chapter_id):
 		return False
 	else:
 		return True
+
+def like_book(data):
+	update_map = {
+		'id': 'book_id',
+		'name': 'book_name',
+		'img_url': 'book_img_url',
+	}
+	re_map_keys([data], update_map)
+	data['user_id'] = 1
+	data['latest_chapter_id'] = 0
+	data['flag'] = 1
+	book_like_item = BookLikeTab(**data)
+	book_like_item.save()
+	return CommonErrorCode.SUCCESS
