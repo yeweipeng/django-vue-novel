@@ -77,8 +77,9 @@ def json_rsp(func):
 		if isinstance(resp, ErrorCodeField):
 			return http.HttpResponse(json.dumps({'retcode': resp, 'retmsg': resp.message}), content_type='application/json; charset=utf-8')
 
-		resp['retcode'] = CommonErrorCode.SUCCESS
-		resp['retmsg'] = CommonErrorCode.SUCCESS.message
+		if 'retcode' not in resp:
+			resp['retcode'] = CommonErrorCode.SUCCESS
+			resp['retmsg'] = CommonErrorCode.SUCCESS.message
 		return http.HttpResponse(json.dumps(resp), content_type='application/json; charset=utf-8')
 	return _func
 

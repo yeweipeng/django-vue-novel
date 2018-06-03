@@ -1,3 +1,3 @@
 
 def warning(log_str, *args, **kwargs):
-	print log_str.format(*args)
+	print log_str.format(*args, **kwargs)

@@ -25,3 +25,23 @@ def get_chapter(requset, data):
 @parse_params(forms.ChapterListForm, 'GET')
 def get_chapter_list(requset, data):
 	return book_manager.get_chapter_list(data['book_id'])
+
+
+@json_rsp
+@parse_params(forms.SearchForm, 'GET')
+def search(requset, data):
+	return {'data' : book_manager.search_book(data['search_word'])}
+
+@json_rsp
+@parse_params(forms.LikeBookForm, 'GET')
+def like_book(requset, data):
+	return book_manager.like_book(data)
+
+@json_rsp
+def set_token(request):
+	from django.http import HttpResponse
+	import uuid
+	token = str(uuid.uuid4())
+	rsp = HttpResponse(token)
+	rsp.set_cookie('TOKEN', token)
+	return rsp

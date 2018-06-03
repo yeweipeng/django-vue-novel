@@ -7,7 +7,7 @@
       <swipeout-item transition-mode="follow" v-for="book in books" :key="book.id">
         <div slot="right-menu">
           <swipeout-button v-if="book.is_save" type="warn">删除</swipeout-button>
-          <swipeout-button v-else background-color="#d0ba32">收藏</swipeout-button>
+          <swipeout-button v-else background-color="#d0ba32" @click.native="like(book)">收藏</swipeout-button>
         </div>
         <cell slot="content" :link="'book/' + book.id + '/' + book.last_read_chapter_id" :inline-desc="book.last_read_chapter_name" class='book-item'>
           <span slot="title">{{book.name}} <badge v-show="book.has_latest"></badge></span>
@@ -43,22 +43,32 @@ export default {
       this.$vux.loading.show({
         text: 'Loading'
       })
-      axios.get('/book/api/get_books', {
+      axios.get('/book/api/search_book', {
         params: {
-          user_id: 1,
           search_word: kw
         }
       }).then((data) => {
         this.$vux.loading.hide()
-        let result = _.differenceBy(data.data, this.books, 'id')
+        let result = _.differenceBy(data.data.data, this.books, 'id')
         this.books = result.concat(this.books)
       })
+    },
+    like (book) {
+      axios.get('/book/api/like_book', {
+        params: book
+      }).then((data) => {
+        book.is_save = true
+      })    
     }
   },
   computed: {
   },
   created: function() {
+    this.$vux.loading.show({
+      text: 'Loading'
+    })
     axios.get('/book/api/get_like_book_list').then((data) => {
+      this.$vux.loading.hide()
       this.books = data.data.data
     })
   }

@@ -12,4 +12,15 @@ class ChapterForm(Form):
 
 class ChapterListForm(Form):
 	book_id = forms.CharField(required=True)
-	
+
+
+class SearchForm(Form):
+	search_word = forms.CharField(required=True)
+
+
+class LikeBookForm(Form):
+	id = forms.CharField(required=True)
+	name = forms.CharField(required=True)
+	img_url = forms.CharField(required=True)
+	last_read_chapter_id = forms.CharField(required=True)
+	last_read_chapter_name = forms.CharField(required=True)
